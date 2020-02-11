@@ -121,6 +121,26 @@ def loadData (catalog):
 def getMoviesByDirector (catalog, dir_name, min_avg):
     return model.getMoviesByDirector(catalog, dir_name, min_avg)
 
+def countMoviesDirector (catalog, dir_name, min_avg):
+    movies = getMoviesByDirector (catalog, dir_name, min_avg)
+    size = lt.size(movies)
+    count = 0
+    sum = 0
+    if size:
+        iterator = it.newIterator(movies)
+        while  it.hasNext(iterator):
+            movie = it.next(iterator)
+            count+=1
+            sum += float(movie['vote_average'])
+        
+        avg = round(( sum / count ),2 )
+            
+    else:
+        avg=0
+
+    data = [avg,count]
+    return data
+
 def getBestMovies (catalog, number):
     movies = catalog['movies']
     bestmovies = lt.newList()
