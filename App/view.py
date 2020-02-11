@@ -39,7 +39,9 @@ def printMenu():
     print("1- Cargar información del reto")
     print("2- Peliculas con mejores votaciones")
     print("3- Peliculas por Director")
-    print("4- Requerimiento 2 ... etc")
+    print("4- Requerimiento 1: Buenas películas por director")
+    print("5- Requerimiento 2: Filtrar películas por votos")
+    print("6- Películas con las peores votaciones")
     print("0- Salir")
 
 
@@ -58,17 +60,26 @@ def loadData (catalog):
 
 
 
-def printBestMovies (movies):
+def printBestMovies (movies, number, criteria):
     size = lt.size(movies)
     if size:
-        print (' Estas son las mejores peliculas: ')
+        print ('\nEstas son las '+str(number)+' películas con '+criteria+": ")
+        iterator = it.newIterator(movies)
+        while  it.hasNext(iterator):
+            movie = it.next(iterator)
+            print ('Titulo: ' + movie['original_title'] + '  Fecha: ' + movie['release_date'] + ' Rating: ' + movie['vote_average'] + ' (' + movie['vote_count'] + ' votos)')
+    else:
+        print ('No se encontraron peliculas')
+
+def printByDirector (movies):
+    size = lt.size(movies)
+    if size:
         iterator = it.newIterator(movies)
         while  it.hasNext(iterator):
             movie = it.next(iterator)
             print ('Titulo: ' + movie['original_title'] + '  Fecha: ' + movie['release_date'] + ' Rating: ' + movie['vote_average'])
     else:
         print ('No se encontraron peliculas')
-
 
 
 """
@@ -88,15 +99,50 @@ while True:
     elif int(inputs[0])==2:
         number = input ("Buscando las TOP ?: ")
         movies = controller.getBestMovies (catalog, int(number))
-        printBestMovies (movies)
+        printBestMovies (movies, number, 'mejor promedio de votos')
+        print ("\n")
 
     elif int(inputs[0])==3:
         dir_name = input("Nombre del director a buscar: ")
-        movies = controller.getMoviesByDirector (catalog, dir_name)
-        print(movies)
-
+        movies = controller.getMoviesByDirector (catalog, dir_name, 0)
+        print('Director buscado: '+dir_name)
+        printByDirector (movies)
+        print ("\n")
 
     elif int(inputs[0])==4:
+        dir_name = input("Nombre del director a buscar: ")
+        movies = controller.getMoviesByDirector (catalog, dir_name, 6)
+        print("El director "+dir_name+" tiene las siguientes películas con puntaje igual o mayor a 6:\n")
+        printByDirector (movies)
+        print ("\n")
+
+    elif int(inputs[0])==5:
+        print("1- Mostrar las 10 películas con mayor cantidad de votos")
+        print("2- Mostrar las películas con menor cantidad de votos")
+        print("3- Mostrar las 10 películas con el mayor voto promedio")
+        print("4- Mostrar las películas con el menor voto promedio")
+        inputs=input('Seleccione una opción para continuar\n')
+        if int(inputs[0])==1:
+            movies = controller.getMostVoted(catalog, 10)
+            printBestMovies(movies, 10, 'mayor cantidad de votos')
+            print ("\n")
+        elif int(inputs[0])==2:
+            number = input("Buscando las TOP?: ")
+            movies = controller.getLessVoted(catalog, number)
+            printBestMovies(movies,number, 'menor cantidad de votos')
+            print('\n')
+        elif int(inputs[0])==3:
+            movies = controller.getBestMovies(catalog, 10)
+            printBestMovies(movies, 10, 'mejor voto promedio')
+            print('\n')
+        elif int(inputs[0])==4:
+            number = input("Buscando las TOP?: ")
+            movies = controller.getWorstMovies(catalog, number)
+            printBestMovies(movies, number, 'peor voto promedio')
+            print('\n')
+
+
+    elif int(inputs[0])==6:
         label = input ("Nombre del Actor a buscar: ")
         pass
     else:

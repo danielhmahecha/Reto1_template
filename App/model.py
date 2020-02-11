@@ -77,9 +77,29 @@ def addDirector (catalog, director):
 
 # Funciones de consulta
 
-def getMoviesByDirector (catalog, dir_name):
+def getMoviesByDirector (catalog, dir_name, min_avg):
     """
     Retorna las peliculas a partir del nombre del director
     """
-    return []
+    directors = catalog['directors']
+    listIds = []
+    size = lt.size(directors)
+    for pos in range (1,size+1):
+        director = lt.getElement(directors, pos)
+        if dir_name.lower() in director['name'].lower():
+            listIds.append(director['movie_id'])
+
+    listMovies = lt.newList()
+    #listTitles = ""
+    
+    movies = catalog['movies']
+    sizeMov=lt.size(movies)
+    for pos in range (0,size+1):
+        movie = lt.getElement(movies, pos)
+        for id in listIds:
+            if movie['id'] ==  id and float(movie['vote_average']) >= min_avg:
+                lt.addLast (listMovies, movie)
+                #listTitles = listTitles + "" + str(movie['title']) + "  (Rating:" + str(movie['vote_average']) + ") \n"
+
+    return listMovies
 

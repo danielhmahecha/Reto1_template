@@ -47,6 +47,8 @@ def printList (lst):
 def compareratings (movie1, movie2):
     return ( float(movie1['vote_average']) > float(movie2['vote_average']))
 
+def compareVoteCount  (movie1, movie2):
+    return ( float(movie1['vote_count']) > float(movie2['vote_count']))
 
 # Funciones para la carga de datos 
 
@@ -97,6 +99,7 @@ def initCatalog ():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
+    catalog = None
     catalog = model.newCatalog()
     return catalog
 
@@ -115,14 +118,49 @@ def loadData (catalog):
 
 # Funciones llamadas desde la vista y enviadas al modelo
 
-def getMoviesByDirector (catalog, dir_name):
-    return model.getMoviesByDirector(catalog, dir_name)
+def getMoviesByDirector (catalog, dir_name, min_avg):
+    return model.getMoviesByDirector(catalog, dir_name, min_avg)
 
 def getBestMovies (catalog, number):
     movies = catalog['movies']
     bestmovies = lt.newList()
-    for cont in range (1, number+1):
+    for cont in range (1, int(number)+1):
         movie = lt.getElement (movies, cont)
         lt.addLast (bestmovies, movie)
     return bestmovies
+
+def getWorstMovies (catalog, number):
+    movies = catalog['movies']
+    worstmovies = lt.newList()
+    size = lt.size(movies)
+    for cont in range (1+size-int(number), size+1):
+        movie = lt.getElement (movies, cont)
+        lt.addLast (worstmovies, movie)
+    return worstmovies
+
+def getMostVoted (catalog, number):
+    
+    sort.sort(catalog['movies'],compareVoteCount)
+    movies=catalog['movies']
+    mostvoted = lt.newList()
+    
+    for cont in range (1, int(number)+1):
+        movie = lt.getElement (movies, cont)
+        lt.addLast (mostvoted, movie)
+    return mostvoted
+    
+def getLessVoted (catalog, number):
+    
+    sort.sort(catalog['movies'],compareVoteCount)
+    movies=catalog['movies']
+
+    size=lt.size(movies)
+    lessvoted = lt.newList()
+
+    print(size)
+
+    for cont in range (1+size-int(number), size+1):
+        movie = lt.getElement (movies, cont)
+        lt.addLast (lessvoted, movie)
+    return lessvoted
 
