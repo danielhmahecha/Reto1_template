@@ -92,7 +92,18 @@ def loadActors(catalog):
     """
     Carga todos los actores
     """
-    pass
+    t1_start = process_time() #tiempo inicial
+    castingfile = cf.data_dir + 'themoviesdb/MoviesCastingRaw-small.csv'
+    
+    dialect = csv.excel()
+    dialect.delimiter=";"
+    with open(castingfile, encoding="utf-8") as csvfile:
+        spamreader = csv.DictReader(csvfile, dialect=dialect)
+        for row in spamreader: 
+            model.addActors (catalog, row)
+    t1_stop = process_time() #tiempo inicial
+    print("Tiempo de ejecución carga actores",t1_stop-t1_start," segundos")
+
 
 
 def initCatalog ():
@@ -123,6 +134,29 @@ def getMoviesByDirector (catalog, dir_name, min_avg):
 
 def countMoviesDirector (catalog, dir_name, min_avg):
     movies = getMoviesByDirector (catalog, dir_name, min_avg)
+    size = lt.size(movies)
+    count = 0
+    sum = 0
+    if size:
+        iterator = it.newIterator(movies)
+        while  it.hasNext(iterator):
+            movie = it.next(iterator)
+            count+=1
+            sum += float(movie['vote_average'])
+        
+        avg = round(( sum / count ),2 )
+            
+    else:
+        avg=0
+
+    data = [avg,count]
+    return data
+
+def getMoviesByActor (catalog, act_name, min_avg):
+    return model.getMoviesByActor(catalog, act_name,min_avg)
+
+def countMoviesActor (catalog, act_name, min_avg):
+    movies = getMoviesByActor (catalog, act_name, min_avg)
     size = lt.size(movies)
     count = 0
     sum = 0

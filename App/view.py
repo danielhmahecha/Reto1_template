@@ -42,7 +42,8 @@ def printMenu():
     print("4- Requerimiento 1: Buenas películas por director")
     print("5- Requerimiento 2: Filtrar películas por votos")
     print("6- Requerimiento 3: Peliculas por Director con promedio de votos")
-    print("7- Películas con las peores votaciones")
+    print("7- Requerimiento 4: Películas por actores")
+    print("8- Requerimiento 5: Peliculas por género")
     print("0- Salir")
 
 
@@ -153,6 +154,15 @@ while True:
 
 
     elif int(inputs[0])==7:
+        act_name = input("Nombre del actor a buscar: ")
+        print("El actor "+act_name+" ha participado en las siguientes películas: ")
+        movies = controller.getMoviesByActor(catalog, act_name, 0.0)
+        printByDirector(movies)
+        data = controller.countMoviesActor(catalog, act_name, 0.0)
+        print('\nEl total de peliculas es: '+str(data[1])+' y el voto promedio es: '+str(data[0]))
+        print ("\n")
+
+    elif int(inputs[0])==8:
         label = input ("Nombre del Actor a buscar: ")
         pass
     else:

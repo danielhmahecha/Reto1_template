@@ -48,13 +48,27 @@ def newActor (name, movie_id):
     """
     Crea una nueva estructura para almacenar los actores de una pelicula 
     """
-    pass
+    actor = {'name':'', 'movie_id':''}
+    actor ['name'] = name
+    actor ['movie_id'] = movie_id
+    return actor
 
-def addActor (catalog, actor):
+def addActors (catalog, actor):
     """
     Adiciona un actor a la lista de actores
     """
-    pass
+    a1 = newActor (actor['actor1_name'], actor['id'])
+    a2 = newActor (actor['actor2_name'], actor['id'])
+    a3 = newActor (actor['actor3_name'], actor['id'])
+    a4 = newActor (actor['actor4_name'], actor['id'])
+    a5 = newActor (actor['actor5_name'], actor['id'])
+    if a1 != "none":
+     lt.addLast (catalog['actors'], a1)
+    lt.addLast (catalog['actors'], a2)
+    lt.addLast (catalog['actors'], a3)
+    lt.addLast (catalog['actors'], a4)
+    lt.addLast (catalog['actors'], a5)
+    
 
 def newDirector (name, movie_id):
     """
@@ -94,7 +108,7 @@ def getMoviesByDirector (catalog, dir_name, min_avg):
     
     movies = catalog['movies']
     sizeMov=lt.size(movies)
-    for pos in range (0,size+1):
+    for pos in range (0,sizeMov+1):
         movie = lt.getElement(movies, pos)
         for id in listIds:
             if movie['id'] ==  id and float(movie['vote_average']) >= min_avg:
@@ -103,3 +117,30 @@ def getMoviesByDirector (catalog, dir_name, min_avg):
 
     return listMovies
 
+def getMoviesByActor (catalog, act_name, min_avg):
+    """
+    Retorna las peliculas a partir del nombre del actor
+    """
+    actors = catalog['actors']
+    listIds = []
+    size = lt.size(actors)
+    for pos in range (1,size+1):
+        actor = lt.getElement(actors, pos)
+        if act_name.lower() in actor['name'].lower():
+            listIds.append(actor['movie_id'])
+
+    
+    listMovies = lt.newList()
+
+    movies = catalog['movies']
+    sizeMov=lt.size(movies)
+    #print(sizeMov)
+
+    for pos in range (0, sizeMov+1):
+        movie=lt.getElement(movies, pos)
+        for id in listIds:
+            if movie['id'] ==  id and float(movie['vote_average']) >= min_avg:
+                lt.addLast (listMovies, movie)
+                #listTitles = listTitles + "" + str(movie['title']) + "  (Rating:" + str(movie['vote_average']) + ") \n"
+
+    return listMovies
