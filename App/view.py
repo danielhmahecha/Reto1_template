@@ -157,15 +157,18 @@ while True:
         act_name = input("Nombre del actor a buscar: ")
         print("El actor "+act_name+" ha participado en las siguientes películas: ")
         movies = controller.getMoviesByActor(catalog, act_name, 0)
+        printByDirector (movies)
         data = controller.countMoviesActor(catalog, act_name, 0)
         director = controller.getDirector_mas_comun(catalog,act_name,0)
         print('\nEl total de peliculas es: '+str(data[1])+' y el voto promedio es: '+str(data[0]))
-        print("\n gshjdsgasdhj " + director)
+        print("\n El director que más ha dirigido a este actor es: " + director)
         print ("\n")
 
     elif int(inputs[0])==8:
-        label = input ("Nombre del Actor a buscar: ")
-        print(catalog['directors'])
+        genre = input ("Nombre del género a buscar: ")
+        #print(catalog['directors'])
+        data = controller.getMoviesByGenre(catalog,genre)
+        print('\nEl total de películas del género '+genre+' es: '+str(data[0])+' y tienen un promedio de votos de: '+str(data[1])+'\n')
 
         pass
     else:

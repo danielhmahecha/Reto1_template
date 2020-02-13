@@ -175,7 +175,7 @@ def getDirector_mas_comun (catalog,dir_name,min_avg):
 
     maximo = 0
     nombre_maximo = " "
-    print(listDirectors)
+    #print(listDirectors)
     for nombre in listDirectors :
         veces = listDirectors.count(nombre)
         if veces > maximo :
@@ -253,6 +253,22 @@ def getLessVoted (catalog, number):
         lt.addLast (lessvoted, movie)
     return lessvoted
 
+def getMoviesByGenre (catalog, genre):
+    movies = catalog['movies']
+    count=0
+    sumvote=0
+    avg=0
+    data=[]
 
+    iterator = it.newIterator(movies)
+    while  it.hasNext(iterator):
+        movie = it.next(iterator)
+        if genre.lower() in movie['genres'].lower():
+            count+=1
+            sumvote+=float(movie['vote_average'])
+            avg=sumvote/count
+    
+    data = [count,round(avg,2)  ]
+    return data
 
 
