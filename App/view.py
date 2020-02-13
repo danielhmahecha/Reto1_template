@@ -134,7 +134,7 @@ while True:
             printBestMovies(movies,number, 'menor cantidad de votos')
             print('\n')
         elif int(inputs[0])==3:
-            movies = controller.getBestMovies(catalog, 10)
+            movies = controller.getBestMovies(catalog,10)
             printBestMovies(movies, 10, 'mejor voto promedio')
             print('\n')
         elif int(inputs[0])==4:
@@ -146,24 +146,27 @@ while True:
     elif int(inputs[0])==6:
         dir_name = input("Nombre del director a buscar: ")
         print("El director "+dir_name+" tiene las siguientes películas: ")
-        movies = controller.getMoviesByDirector (catalog, dir_name, 0.0)
+        movies = controller.getMoviesByDirector (catalog, dir_name, 0)
         printByDirector (movies)
-        data = controller.countMoviesDirector (catalog, dir_name, 0.0)
-        print('\nEl total de peliculas es: '+str(data[1])+' y el voto promedio es: '+str(data[0]))
+        data = controller.countMoviesDirector (catalog, dir_name, 0)
+        print('\nEl total de peliculas es '+str(data[1])+' y el voto promedio es '+str(data[0]))
         print ("\n")
 
 
     elif int(inputs[0])==7:
         act_name = input("Nombre del actor a buscar: ")
         print("El actor "+act_name+" ha participado en las siguientes películas: ")
-        movies = controller.getMoviesByActor(catalog, act_name, 0.0)
-        printByDirector(movies)
-        data = controller.countMoviesActor(catalog, act_name, 0.0)
+        movies = controller.getMoviesByActor(catalog, act_name, 0)
+        data = controller.countMoviesActor(catalog, act_name, 0)
+        director = controller.getDirector_mas_comun(catalog,act_name,0)
         print('\nEl total de peliculas es: '+str(data[1])+' y el voto promedio es: '+str(data[0]))
+        print("\n gshjdsgasdhj " + director)
         print ("\n")
 
     elif int(inputs[0])==8:
         label = input ("Nombre del Actor a buscar: ")
+        print(catalog['directors'])
+
         pass
     else:
         sys.exit(0)

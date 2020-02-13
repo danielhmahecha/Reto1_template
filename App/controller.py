@@ -150,7 +150,39 @@ def countMoviesDirector (catalog, dir_name, min_avg):
         avg=0
 
     data = [avg,count]
+
     return data
+
+def getDirector_mas_comun (catalog,dir_name,min_avg):
+
+    movies = getMoviesByActor (catalog, dir_name,min_avg)
+    directors = catalog['directors']
+    size = lt.size(movies)
+    listDirectors = []
+    if size:
+        iterator = it.newIterator(movies)
+        while  it.hasNext(iterator):
+            movie = it.next(iterator)
+            ID = int(movie['id'])
+            size1 = lt.size(directors)
+            if size1:
+                iterator_1 = it.newIterator(directors)
+                while  it.hasNext(iterator_1):
+                    peli = it.next(iterator_1)
+                    i = int(peli['movie_id'])
+                    if ID == i :
+                        listDirectors.append(peli['name'])
+
+    maximo = 0
+    nombre_maximo = " "
+    print(listDirectors)
+    for nombre in listDirectors :
+        veces = listDirectors.count(nombre)
+        if veces > maximo :
+            maximo = veces
+            nombre_maximo = nombre
+
+    return nombre_maximo 
 
 def getMoviesByActor (catalog, act_name, min_avg):
     return model.getMoviesByActor(catalog, act_name,min_avg)
@@ -176,6 +208,7 @@ def countMoviesActor (catalog, act_name, min_avg):
     return data
 
 def getBestMovies (catalog, number):
+    sort.sort(catalog['movies'],compareratings)
     movies = catalog['movies']
     bestmovies = lt.newList()
     for cont in range (1, int(number)+1):
@@ -184,10 +217,12 @@ def getBestMovies (catalog, number):
     return bestmovies
 
 def getWorstMovies (catalog, number):
+
+    sort.sort(catalog['movies'],compareratings)
     movies = catalog['movies']
     worstmovies = lt.newList()
     size = lt.size(movies)
-    for cont in range (1+size-int(number), size+1):
+    for cont in range (size-int(number), size+1):
         movie = lt.getElement (movies, cont)
         lt.addLast (worstmovies, movie)
     return worstmovies
@@ -217,4 +252,7 @@ def getLessVoted (catalog, number):
         movie = lt.getElement (movies, cont)
         lt.addLast (lessvoted, movie)
     return lessvoted
+
+
+
 

@@ -63,11 +63,15 @@ def addActors (catalog, actor):
     a4 = newActor (actor['actor4_name'], actor['id'])
     a5 = newActor (actor['actor5_name'], actor['id'])
     if a1 != "none":
-     lt.addLast (catalog['actors'], a1)
-    lt.addLast (catalog['actors'], a2)
-    lt.addLast (catalog['actors'], a3)
-    lt.addLast (catalog['actors'], a4)
-    lt.addLast (catalog['actors'], a5)
+        lt.addLast (catalog['actors'], a1)
+    if a2 != "none":
+        lt.addLast (catalog['actors'], a2)
+    if a3 != "none":
+        lt.addLast (catalog['actors'], a3)
+    if a4 != "none":
+        lt.addLast (catalog['actors'], a4)
+    if a5 != "none":
+        lt.addLast (catalog['actors'], a5)
     
 
 def newDirector (name, movie_id):
@@ -98,7 +102,7 @@ def getMoviesByDirector (catalog, dir_name, min_avg):
     directors = catalog['directors']
     listIds = []
     size = lt.size(directors)
-    for pos in range (1,size+1):
+    for pos in range (0,size+1):
         director = lt.getElement(directors, pos)
         if dir_name.lower() in director['name'].lower():
             listIds.append(director['movie_id'])
