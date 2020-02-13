@@ -160,7 +160,7 @@ while True:
         data = controller.countMoviesActor(catalog, act_name, 0)
         director = controller.getDirector_mas_comun(catalog,act_name,0)
         print('\nEl total de peliculas es: '+str(data[1])+' y el voto promedio es: '+str(data[0]))
-        print("\n gshjdsgasdhj " + director)
+        print("\n El director que mas veces lo ha dirigido es  " + director)
         print ("\n")
 
     elif int(inputs[0])==8:

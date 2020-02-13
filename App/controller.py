@@ -158,7 +158,8 @@ def getDirector_mas_comun (catalog,dir_name,min_avg):
     movies = getMoviesByActor (catalog, dir_name,min_avg)
     directors = catalog['directors']
     size = lt.size(movies)
-    listDirectors = []
+    listDirectors = lt.newList()
+    dicc = {}
     if size:
         iterator = it.newIterator(movies)
         while  it.hasNext(iterator):
@@ -171,18 +172,23 @@ def getDirector_mas_comun (catalog,dir_name,min_avg):
                     peli = it.next(iterator_1)
                     i = int(peli['movie_id'])
                     if ID == i :
-                        listDirectors.append(peli['name'])
+                        if peli['name'] in dicc:
+                            nVeces = dicc[peli['name']]
+                            dicc[peli['name']] = nVeces +1
+                        else :
+                            dicc[peli['name']] = 1
+                        lt.addLast(listDirectors, peli['name'])
 
     maximo = 0
     nombre_maximo = " "
-    print(listDirectors)
-    for nombre in listDirectors :
-        veces = listDirectors.count(nombre)
+    print(dicc)
+    for director in dicc :
+        veces = dicc[director]
         if veces > maximo :
             maximo = veces
-            nombre_maximo = nombre
+            nombre_maximo = director
 
-    return nombre_maximo 
+    return nombre_maximo
 
 def getMoviesByActor (catalog, act_name, min_avg):
     return model.getMoviesByActor(catalog, act_name,min_avg)
