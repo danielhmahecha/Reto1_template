@@ -148,8 +148,8 @@ def countMoviesDirector (catalog, dir_name, min_avg):
             
     else:
         avg=0
-
-    data = [avg,count]
+    
+    data = (avg,count)
 
     return data
 
@@ -181,7 +181,7 @@ def getDirector_mas_comun (catalog,dir_name,min_avg):
 
     maximo = 0
     nombre_maximo = " "
-    print(dicc)
+
     for director in dicc :
         veces = dicc[director]
         if veces > maximo :
@@ -230,7 +230,7 @@ def getWorstMovies (catalog, number):
     size = lt.size(movies)
     for cont in range (size-int(number), size+1):
         movie = lt.getElement (movies, cont)
-        lt.addLast (worstmovies, movie)
+        lt.addFirst (worstmovies, movie)
     return worstmovies
 
 def getMostVoted (catalog, number):
@@ -256,7 +256,7 @@ def getLessVoted (catalog, number):
 
     for cont in range (1+size-int(number), size+1):
         movie = lt.getElement (movies, cont)
-        lt.addLast (lessvoted, movie)
+        lt.addFirst (lessvoted, movie)
     return lessvoted
 
 def getMoviesByGenre (catalog, genre):
@@ -274,7 +274,7 @@ def getMoviesByGenre (catalog, genre):
             sumvote+=float(movie['vote_average'])
             avg=sumvote/count
     
-    data = [count,round(avg,2)  ]
+    data = (count,round(avg,2) )
     return data
 
 
